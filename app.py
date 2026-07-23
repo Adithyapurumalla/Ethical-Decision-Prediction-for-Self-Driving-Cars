@@ -23,7 +23,7 @@ import streamlit as st
 # ==============================================================================
 
 st.set_page_config(
-    page_title="Self-Driving Car Ethics AI Studio",
+    page_title="Ethical Decision Prediction for Self-Driving Cars",
     page_icon="🚗",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -406,7 +406,7 @@ def generate_narrative_explanation(params: Dict[str, Any], decision: str, confid
 
 st.markdown("""
 <div class="hero-banner">
-    <h1 class="hero-title">🚗 Self-Driving Car Ethics AI Studio</h1>
+    <h1 class="hero-title">🚗 Ethical Decision Prediction for Self-Driving Cars</h1>
     <p class="hero-subtitle">Interactive Moral Machine Dilemma Simulator & Decision Explainer</p>
 </div>
 """, unsafe_allow_html=True)
