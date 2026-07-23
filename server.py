@@ -1,8 +1,8 @@
 """
-Self-Driving Car Ethics AI - FastAPI Backend Server
+Self-Driving Car Ethics AI - FastAPI Backend Server & Static Host
 
 Exposes REST API endpoints for real-time model inference, batch processing,
-analytics data, and training report artifacts to power the React.js frontend.
+analytics data, and training report artifacts while serving the React.js frontend SPA.
 """
 
 import os
@@ -16,12 +16,13 @@ import joblib
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 # Initialize FastAPI App
 app = FastAPI(
-    title="Self-Driving Car Ethics AI API",
-    description="REST API for Autonomous Vehicle Ethical Decision Prediction",
+    title="Ethical Decision Prediction for Self-Driving Cars",
+    description="REST API & Web Platform for Autonomous Vehicle Ethical Decision Prediction",
     version="1.0.0"
 )
 
@@ -38,6 +39,11 @@ app.add_middleware(
 outputs_path = Path("outputs")
 if outputs_path.exists():
     app.mount("/outputs", StaticFiles(directory="outputs"), name="outputs")
+
+# Mount static assets from built React frontend
+frontend_dist = Path("frontend/dist")
+if (frontend_dist / "assets").exists():
+    app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
 
 # ==============================================================================
 # CACHED MODEL & ARTIFACT LOADERS
@@ -241,6 +247,21 @@ def get_eda_images():
         return {"images": []}
     images = [f.name for f in eda_dir.glob("*.png")]
     return {"images": sorted(images)}
+
+
+# ==============================================================================
+# REACT FRONTEND SPA CATCH-ALL ROUTE
+# ==============================================================================
+
+@app.get("/{full_path:path}")
+def serve_react_frontend(full_path: str):
+    file_path = frontend_dist / full_path
+    if file_path.exists() and file_path.is_file():
+        return FileResponse(file_path)
+    index_path = frontend_dist / "index.html"
+    if index_path.exists():
+        return FileResponse(index_path)
+    return {"message": "API active. React frontend build not found."}
 
 
 if __name__ == "__main__":
