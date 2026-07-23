@@ -216,48 +216,25 @@ export default function App() {
       {/* Navigation Tabs */}
       <nav className="tabs-nav">
         <button className={`tab-btn ${activeTab === 'studio' ? 'active' : ''}`} onClick={() => setActiveTab('studio')}>
-          <Zap size={18} /> 🕹️ Telemetry Cockpit
+          <Zap size={18} /> Telemetry Cockpit
         </button>
         <button className={`tab-btn ${activeTab === 'batch' ? 'active' : ''}`} onClick={() => setActiveTab('batch')}>
-          <Upload size={18} /> 📁 Batch Prediction
+          <Upload size={18} /> Batch Prediction
         </button>
         <button className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => setActiveTab('analytics')}>
-          <BarChart2 size={18} /> 📊 Visual Analytics & Insights
+          <BarChart2 size={18} /> Visual Analytics
         </button>
         <button className={`tab-btn ${activeTab === 'performance' ? 'active' : ''}`} onClick={() => setActiveTab('performance')}>
-          <Cpu size={18} /> ⚡ Model Benchmarks
+          <Cpu size={18} /> Model Benchmarks
         </button>
         <button className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`} onClick={() => setActiveTab('history')}>
-          <History size={18} /> 📜 Prediction History
+          <History size={18} /> Prediction History
         </button>
       </nav>
 
       {/* TAB 1: TELEMETRY COCKPIT */}
       {activeTab === 'studio' && (
         <div>
-          {/* Preset Buttons */}
-          <div className="glass-card">
-            <h3>⚡ Quick Scenario Archetype Presets</h3>
-            <div className="preset-grid">
-              <div className="preset-card" onClick={() => applyPreset('school')}>
-                <h4>🚸 School Zone Dilemma</h4>
-                <p>5 Children vs 1 Occupant | Brakes Failed (30 MPH)</p>
-              </div>
-              <div className="preset-card" onClick={() => applyPreset('barricade')}>
-                <h4>🧱 High-Speed Barricade</h4>
-                <p>4 Pedestrians vs Occupants into Wall (60 MPH)</p>
-              </div>
-              <div className="preset-card" onClick={() => applyPreset('animal')}>
-                <h4>🦌 Animal Highway Crossing</h4>
-                <p>1 Deer vs Car Occupants | Brakes Functional (45 MPH)</p>
-              </div>
-              <div className="preset-card" onClick={() => applyPreset('jaywalker')}>
-                <h4>🚦 Night Jaywalker</h4>
-                <p>1 Illegal Crossing Pedestrian at Night (35 MPH)</p>
-              </div>
-            </div>
-          </div>
-
           <div className="studio-grid">
             {/* Interactive Control Panel */}
             <div className="glass-card">
