@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Driving Car Ethics AI - Exploratory Data Analysis Report</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --badge-bg: #0284c7;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        header h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .card h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--badge-bg);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin: 2px;
+        }
+        .vis-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 35px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        .vis-card h2 {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .explanation-box {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: #e2e8f0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 Self-Driving Car Ethics AI</h1>
+            <p>Comprehensive Exploratory Data Analysis (EDA) & Moral Machine Insights</p>
+        </header>
+
+        <section>
+            <h2>📋 Dataset Overview & Metadata</h2>
+            
+        <div class="card">
+            <h3>📊 Dataset: country_preferences.csv</h3>
+            <div class="grid-2">
+                <p><strong>Shape:</strong> 2388 rows, 8 columns</p>
+                <p><strong>Duplicate Rows:</strong> 0 (0.0%)</p>
+                <p><strong>Missing Cells:</strong> 1656</p>
+                <p><strong>Numerical Columns:</strong> 4</p>
+            </div>
+            <p><strong>Categorical Columns:</strong> 4</p>
+            <div class="col-list">
+                <strong>Columns:</strong><br><span class='badge badge-col'>country</span><span class='badge badge-col'>scenario_type</span><span class='badge badge-col'>character_group</span><span class='badge badge-col'>n_saved</span><span class='badge badge-col'>n_outcomes</span><span class='badge badge-col'>save_rate</span><span class='badge badge-col'>country_name</span><span class='badge badge-col'>cultural_cluster</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>📊 Dataset: demographic_preferences.csv</h3>
+            <div class="grid-2">
+                <p><strong>Shape:</strong> 360 rows, 7 columns</p>
+                <p><strong>Duplicate Rows:</strong> 0 (0.0%)</p>
+                <p><strong>Missing Cells:</strong> 0</p>
+                <p><strong>Numerical Columns:</strong> 3</p>
+            </div>
+            <p><strong>Categorical Columns:</strong> 4</p>
+            <div class="col-list">
+                <strong>Columns:</strong><br><span class='badge badge-col'>dimension</span><span class='badge badge-col'>group</span><span class='badge badge-col'>scenario_type</span><span class='badge badge-col'>character_group</span><span class='badge badge-col'>n_saved</span><span class='badge badge-col'>n_outcomes</span><span class='badge badge-col'>save_rate</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>📊 Dataset: moral_machine_responses.csv</h3>
+            <div class="grid-2">
+                <p><strong>Shape:</strong> 600217 rows, 33 columns</p>
+                <p><strong>Duplicate Rows:</strong> 0 (0.0%)</p>
+                <p><strong>Missing Cells:</strong> 84001</p>
+                <p><strong>Numerical Columns:</strong> 28</p>
+            </div>
+            <p><strong>Categorical Columns:</strong> 5</p>
+            <div class="col-list">
+                <strong>Columns:</strong><br><span class='badge badge-col'>outcome_id</span><span class='badge badge-col'>country</span><span class='badge badge-col'>scenario_type</span><span class='badge badge-col'>character_group</span><span class='badge badge-col'>saved</span><span class='badge badge-col'>dies_if_car_swerves</span><span class='badge badge-col'>pedestrians_vs_pedestrians</span><span class='badge badge-col'>is_passengers</span><span class='badge badge-col'>crossing_legality</span><span class='badge badge-col'>num_characters</span><span class='badge badge-col'>diff_num_characters</span><span class='badge badge-col'>scenario_order</span><span class='badge badge-col'>device</span><span class='badge badge-col'>man</span><span class='badge badge-col'>woman</span><span class='badge badge-col'>pregnant</span><span class='badge badge-col'>stroller</span><span class='badge badge-col'>old_man</span><span class='badge badge-col'>old_woman</span><span class='badge badge-col'>boy</span><span class='badge badge-col'>girl</span><span class='badge badge-col'>homeless</span><span class='badge badge-col'>large_woman</span><span class='badge badge-col'>large_man</span><span class='badge badge-col'>criminal</span><span class='badge badge-col'>male_executive</span><span class='badge badge-col'>female_executive</span><span class='badge badge-col'>female_athlete</span><span class='badge badge-col'>male_athlete</span><span class='badge badge-col'>female_doctor</span><span class='badge badge-col'>male_doctor</span><span class='badge badge-col'>dog</span><span class='badge badge-col'>cat</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>📊 Dataset: self_driving_car_ethics.csv</h3>
+            <div class="grid-2">
+                <p><strong>Shape:</strong> 15 rows, 10 columns</p>
+                <p><strong>Duplicate Rows:</strong> 0 (0.0%)</p>
+                <p><strong>Missing Cells:</strong> 0</p>
+                <p><strong>Numerical Columns:</strong> 5</p>
+            </div>
+            <p><strong>Categorical Columns:</strong> 5</p>
+            <div class="col-list">
+                <strong>Columns:</strong><br><span class='badge badge-col'>scenario_id</span><span class='badge badge-col'>speed_mph</span><span class='badge badge-col'>pedestrian_count</span><span class='badge badge-col'>passenger_count</span><span class='badge badge-col'>obstacle_type</span><span class='badge badge-col'>pedestrian_jaywalking</span><span class='badge badge-col'>weather_condition</span><span class='badge badge-col'>brake_status</span><span class='badge badge-col'>decision</span><span class='badge badge-col'>ethical_score</span>
+            </div>
+        </div>
+        
+        </section>
+
+        <section>
+            <h2>📈 Exploratory Visualizations & Empirical Insights</h2>
+            
+        <div class="vis-card">
+            <h2>Feature Histograms (country_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="histograms_country_preferences.png" alt="Feature Histograms (country_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Histograms for 'country_preferences.csv' reveal feature distributions and skewness. Continuous variables such as n_saved, n_outcomes, save_rate show normal or skewed patterns, providing insights into normalization or scaling requirements.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Categorical Count Plots (country_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="countplots_country_preferences.png" alt="Categorical Count Plots (country_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Count plots for categorical features (scenario_type, character_group) display class frequencies and imbalances. Categories with higher frequencies indicate dominant decision criteria or scenario types.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Correlation Heatmap (country_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="correlation_heatmap_country_preferences.png" alt="Correlation Heatmap (country_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> The correlation heatmap highlights linear relationships among numerical features in 'country_preferences.csv'. Strong positive or negative correlations indicate feature dependencies relevant for predictive modeling.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Outlier Box Plots (country_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="boxplots_country_preferences.png" alt="Outlier Box Plots (country_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Boxplots illustrate feature spreads, medians, interquartile ranges (IQR), and potential statistical outliers in 'country_preferences.csv'. Points outside the whiskers signify extreme response scenarios.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Pair Plot (country_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="pairplot_country_preferences.png" alt="Pair Plot (country_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Pair plots depict bivariate relationships between numerical variables (n_saved, n_outcomes, save_rate, cultural_cluster). Scattered distributions show cluster tendencies and multi-variable interactions.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Feature Histograms (demographic_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="histograms_demographic_preferences.png" alt="Feature Histograms (demographic_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Histograms for 'demographic_preferences.csv' reveal feature distributions and skewness. Continuous variables such as n_saved, n_outcomes, save_rate show normal or skewed patterns, providing insights into normalization or scaling requirements.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Categorical Count Plots (demographic_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="countplots_demographic_preferences.png" alt="Categorical Count Plots (demographic_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Count plots for categorical features (dimension, scenario_type, character_group) display class frequencies and imbalances. Categories with higher frequencies indicate dominant decision criteria or scenario types.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Correlation Heatmap (demographic_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="correlation_heatmap_demographic_preferences.png" alt="Correlation Heatmap (demographic_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> The correlation heatmap highlights linear relationships among numerical features in 'demographic_preferences.csv'. Strong positive or negative correlations indicate feature dependencies relevant for predictive modeling.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Outlier Box Plots (demographic_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="boxplots_demographic_preferences.png" alt="Outlier Box Plots (demographic_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Boxplots illustrate feature spreads, medians, interquartile ranges (IQR), and potential statistical outliers in 'demographic_preferences.csv'. Points outside the whiskers signify extreme response scenarios.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Pair Plot (demographic_preferences.csv)</h2>
+            <div class="img-container">
+                <img src="pairplot_demographic_preferences.png" alt="Pair Plot (demographic_preferences.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Pair plots depict bivariate relationships between numerical variables (n_saved, n_outcomes, save_rate). Scattered distributions show cluster tendencies and multi-variable interactions.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Feature Histograms (moral_machine_responses.csv)</h2>
+            <div class="img-container">
+                <img src="histograms_moral_machine_responses.png" alt="Feature Histograms (moral_machine_responses.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Histograms for 'moral_machine_responses.csv' reveal feature distributions and skewness. Continuous variables such as saved, dies_if_car_swerves, pedestrians_vs_pedestrians show normal or skewed patterns, providing insights into normalization or scaling requirements.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Categorical Count Plots (moral_machine_responses.csv)</h2>
+            <div class="img-container">
+                <img src="countplots_moral_machine_responses.png" alt="Categorical Count Plots (moral_machine_responses.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Count plots for categorical features (scenario_type, character_group, device) display class frequencies and imbalances. Categories with higher frequencies indicate dominant decision criteria or scenario types.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Correlation Heatmap (moral_machine_responses.csv)</h2>
+            <div class="img-container">
+                <img src="correlation_heatmap_moral_machine_responses.png" alt="Correlation Heatmap (moral_machine_responses.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> The correlation heatmap highlights linear relationships among numerical features in 'moral_machine_responses.csv'. Strong positive or negative correlations indicate feature dependencies relevant for predictive modeling.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Outlier Box Plots (moral_machine_responses.csv)</h2>
+            <div class="img-container">
+                <img src="boxplots_moral_machine_responses.png" alt="Outlier Box Plots (moral_machine_responses.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Boxplots illustrate feature spreads, medians, interquartile ranges (IQR), and potential statistical outliers in 'moral_machine_responses.csv'. Points outside the whiskers signify extreme response scenarios.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Pair Plot (moral_machine_responses.csv)</h2>
+            <div class="img-container">
+                <img src="pairplot_moral_machine_responses.png" alt="Pair Plot (moral_machine_responses.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Pair plots depict bivariate relationships between numerical variables (saved, dies_if_car_swerves, pedestrians_vs_pedestrians, is_passengers). Scattered distributions show cluster tendencies and multi-variable interactions.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Feature Histograms (self_driving_car_ethics.csv)</h2>
+            <div class="img-container">
+                <img src="histograms_self_driving_car_ethics.png" alt="Feature Histograms (self_driving_car_ethics.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Histograms for 'self_driving_car_ethics.csv' reveal feature distributions and skewness. Continuous variables such as speed_mph, pedestrian_count, passenger_count show normal or skewed patterns, providing insights into normalization or scaling requirements.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Categorical Count Plots (self_driving_car_ethics.csv)</h2>
+            <div class="img-container">
+                <img src="countplots_self_driving_car_ethics.png" alt="Categorical Count Plots (self_driving_car_ethics.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Count plots for categorical features (obstacle_type, weather_condition, brake_status, decision) display class frequencies and imbalances. Categories with higher frequencies indicate dominant decision criteria or scenario types.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Correlation Heatmap (self_driving_car_ethics.csv)</h2>
+            <div class="img-container">
+                <img src="correlation_heatmap_self_driving_car_ethics.png" alt="Correlation Heatmap (self_driving_car_ethics.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> The correlation heatmap highlights linear relationships among numerical features in 'self_driving_car_ethics.csv'. Strong positive or negative correlations indicate feature dependencies relevant for predictive modeling.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Outlier Box Plots (self_driving_car_ethics.csv)</h2>
+            <div class="img-container">
+                <img src="boxplots_self_driving_car_ethics.png" alt="Outlier Box Plots (self_driving_car_ethics.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Boxplots illustrate feature spreads, medians, interquartile ranges (IQR), and potential statistical outliers in 'self_driving_car_ethics.csv'. Points outside the whiskers signify extreme response scenarios.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Pair Plot (self_driving_car_ethics.csv)</h2>
+            <div class="img-container">
+                <img src="pairplot_self_driving_car_ethics.png" alt="Pair Plot (self_driving_car_ethics.csv)">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Pair plots depict bivariate relationships between numerical variables (speed_mph, pedestrian_count, passenger_count, pedestrian_jaywalking). Scattered distributions show cluster tendencies and multi-variable interactions.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Country-Wise Ethical Preference Analysis</h2>
+            <div class="img-container">
+                <img src="country_ethical_preference.png" alt="Country-Wise Ethical Preference Analysis">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> This chart illustrates how ethical saving preferences vary across countries for different scenario types (e.g., Age, Fitness, Gender, Social Status, Species, Utilitarian). Variation highlights cultural nuances in moral decision-making.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Demographic Preference Breakdown</h2>
+            <div class="img-container">
+                <img src="demographic_preference.png" alt="Demographic Preference Breakdown">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> The demographic preference chart compares ethical choices across demographic segments (such as age brackets, gender, and education levels). It reveals disparities in priority given to characters based on user demographics.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Distribution of Ethical Decisions & Actions</h2>
+            <div class="img-container">
+                <img src="ethical_decisions_distribution.png" alt="Distribution of Ethical Decisions & Actions">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> This chart details the proportion of ethical outcomes (e.g., characters saved vs allowed to perish) and the frequency of specific autonomous driving maneuvers (such as hard braking vs swerving).
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Top 10 Countries by Response & Outcome Count</h2>
+            <div class="img-container">
+                <img src="top_10_countries_response_count.png" alt="Top 10 Countries by Response & Outcome Count">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> The Top 10 countries chart highlights geographic data density. Understanding response volume by country ensures balanced ethical model training and guards against regional sampling bias.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Age-Group Preference Analysis</h2>
+            <div class="img-container">
+                <img src="age_group_preference.png" alt="Age-Group Preference Analysis">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Age-group preference analysis demonstrates how respondents of different ages prioritize different character groups (e.g., Young vs Old, Fit vs Fat, Humans vs Pets). Higher save rates for young characters indicate consistent utilitarian preference across age brackets.
+            </div>
+        </div>
+        
+        <div class="vis-card">
+            <h2>Gender Preference Analysis</h2>
+            <div class="img-container">
+                <img src="gender_preference.png" alt="Gender Preference Analysis">
+            </div>
+            <div class="explanation-box">
+                💡 <strong>Analysis & Insights:</strong> Gender preference analysis examines saving tendencies based on gender characteristics of both respondents and characters. It evaluates potential bias in ethical preference towards female vs male characters in critical scenarios.
+            </div>
+        </div>
+        
+        </section>
+
+        <footer>
+            Self-Driving Car Ethics AI Project &copy; 2026. Generated automatically by EDA Pipeline.
+        </footer>
+    </div>
+</body>
+</html>

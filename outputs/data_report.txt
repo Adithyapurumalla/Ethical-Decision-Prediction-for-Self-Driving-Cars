@@ -1,0 +1,84 @@
+================================================================================
+ DATA QUALITY & EXPLORATORY REPORT: country_preferences.csv
+================================================================================
+
+1. DATASET SHAPE
+--------------------------------------------------------------------------------
+Rows: 2388
+Columns: 8
+
+2. COLUMN NAMES & DATA TYPES
+--------------------------------------------------------------------------------
+country                 str
+scenario_type           str
+character_group         str
+n_saved               int64
+n_outcomes            int64
+save_rate           float64
+country_name            str
+cultural_cluster    float64
+
+3. FIRST 10 ROWS
+--------------------------------------------------------------------------------
+  country  scenario_type character_group  n_saved  n_outcomes  save_rate country_name  cultural_cluster
+0     ABW            Age             Old        3          12     0.2500          NaN               NaN
+1     ABW            Age           Young        5           6     0.8333          NaN               NaN
+2     ABW        Fitness             Fat        2           5     0.4000          NaN               NaN
+3     ABW        Fitness             Fit        4           5     0.8000          NaN               NaN
+4     ABW         Gender          Female        2           4     0.5000          NaN               NaN
+5     ABW         Gender            Male        3           9     0.3333          NaN               NaN
+6     ABW  Social Status            High        2           5     0.4000          NaN               NaN
+7     ABW  Social Status             Low        1           5     0.2000          NaN               NaN
+8     ABW        Species         Hoomans        6           8     0.7500          NaN               NaN
+9     ABW        Species            Pets        2           6     0.3333          NaN               NaN
+
+4. LAST 10 ROWS
+--------------------------------------------------------------------------------
+     country  scenario_type character_group  n_saved  n_outcomes  save_rate country_name  cultural_cluster
+2378     ZWE            Age           Young        2           5     0.4000          NaN               NaN
+2379     ZWE        Fitness             Fat        1           5     0.2000          NaN               NaN
+2380     ZWE        Fitness             Fit        2           3     0.6667          NaN               NaN
+2381     ZWE         Gender          Female        1           5     0.2000          NaN               NaN
+2382     ZWE         Gender            Male        0           2     0.0000          NaN               NaN
+2383     ZWE  Social Status             Low        1           4     0.2500          NaN               NaN
+2384     ZWE        Species         Hoomans        5           6     0.8333          NaN               NaN
+2385     ZWE        Species            Pets        0           6     0.0000          NaN               NaN
+2386     ZWE    Utilitarian            Less        1           5     0.2000          NaN               NaN
+2387     ZWE    Utilitarian            More        1           2     0.5000          NaN               NaN
+
+5. MISSING VALUES
+--------------------------------------------------------------------------------
+country               0
+scenario_type         0
+character_group       0
+n_saved               0
+n_outcomes            0
+save_rate             0
+country_name        828
+cultural_cluster    828
+
+Total Missing Cells: 1656
+
+6. DUPLICATE ROWS
+--------------------------------------------------------------------------------
+Duplicate Rows Count: 0
+Duplicate Rows Percentage: 0.00%
+
+7. SUMMARY STATISTICS (NUMERICAL & CATEGORICAL)
+--------------------------------------------------------------------------------
+       country scenario_type character_group       n_saved    n_outcomes    save_rate country_name  cultural_cluster
+count     2388          2388            2388   2388.000000   2388.000000  2388.000000         1560       1560.000000
+unique     228             6              12           NaN           NaN          NaN          130               NaN
+top        ABW           Age             Old           NaN           NaN          NaN  Afghanistan               NaN
+freq        12           410             206           NaN           NaN          NaN           12               NaN
+mean       NaN           NaN             NaN    680.823702   1482.660804     0.461984          NaN          0.753846
+std        NaN           NaN             NaN   3206.633052   6301.491108     0.289691          NaN          0.851169
+min        NaN           NaN             NaN      0.000000      1.000000     0.000000          NaN          0.000000
+25%        NaN           NaN             NaN      2.000000      5.000000     0.221275          NaN          0.000000
+50%        NaN           NaN             NaN     15.000000     35.000000     0.444400          NaN          0.000000
+75%        NaN           NaN             NaN    205.000000    489.000000     0.708300          NaN          2.000000
+max        NaN           NaN             NaN  67977.000000  90488.000000     1.000000          NaN          2.000000
+
+================================================================================
+ END OF REPORT
+================================================================================

@@ -1,0 +1,54 @@
+================================================================================
+ SELF-DRIVING CAR ETHICS AI - MACHINE LEARNING TRAINING REPORT
+================================================================================
+
+1. DATASET & PREPROCESSING SUMMARY
+--------------------------------------------------------------------------------
+Primary Dataset Name   : self_driving_car_ethics.csv
+Feature Matrix Shape   : 300 samples x 11 features
+Target Column          : 'decision'
+Split Ratio            : 80% Training / 20% Testing (random_state=42)
+Numerical Scaling      : StandardScaler
+Categorical Encoding   : OneHotEncoder (handle_unknown='ignore')
+
+2. MODEL BENCHMARK COMPARISON
+--------------------------------------------------------------------------------
+              Model  Accuracy  Precision  Recall  F1 Score  ROC-AUC  5-Fold CV F1  5-Fold CV Std
+      Decision Tree    0.8167     0.8117  0.8167    0.8130   0.8505        0.7719         0.0458
+            XGBoost    0.8167     0.8068  0.8167    0.8100   0.9267        0.7495         0.0341
+Logistic Regression    0.8000     0.7950  0.8000    0.7966   0.9210        0.7438         0.0490
+      Random Forest    0.8167     0.8089  0.8167    0.7889   0.8980        0.7704         0.0411
+
+3. BEST MODEL PERFORMANCE DETAILS
+--------------------------------------------------------------------------------
+Selected Best Model    : Decision Tree
+Test Accuracy          : 0.8167
+Weighted F1 Score      : 0.8130
+5-Fold CV Mean F1      : 0.7719 (+/- 0.0458)
+
+Classification Report:
+                 precision    recall  f1-score   support
+
+     brake_hard       0.93      0.93      0.93        40
+maintain_course       0.55      0.55      0.55        11
+    swerve_left       0.50      0.40      0.44         5
+   swerve_right       0.80      1.00      0.89         4
+
+       accuracy                           0.82        60
+      macro avg       0.69      0.72      0.70        60
+   weighted avg       0.81      0.82      0.81        60
+
+
+4. SAVED ARTIFACT LOCATIONS
+--------------------------------------------------------------------------------
+Best Model Binary      : models\best_model.pkl
+Preprocessor Binary    : models\preprocessor.pkl
+Metrics CSV            : models\model_metrics.csv
+Confusion Matrix PNG   : outputs\models\confusion_matrix_best.png
+Model Comparison PNG   : outputs\models\model_comparison.png
+Feature Importance PNG : outputs\models\feature_importance_best.png
+ROC Curve PNG          : outputs\models\roc_curve_best.png
+
+================================================================================
+ END OF TRAINING REPORT
+================================================================================

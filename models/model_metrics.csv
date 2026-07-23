@@ -1,0 +1,5 @@
+Model,Accuracy,Precision,Recall,F1 Score,ROC-AUC,5-Fold CV F1,5-Fold CV Std
+Decision Tree,0.8167,0.8117,0.8167,0.813,0.8505,0.7719,0.0458
+XGBoost,0.8167,0.8068,0.8167,0.81,0.9267,0.7495,0.0341
+Logistic Regression,0.8,0.795,0.8,0.7966,0.921,0.7438,0.049
+Random Forest,0.8167,0.8089,0.8167,0.7889,0.898,0.7704,0.0411
