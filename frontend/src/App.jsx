@@ -204,7 +204,7 @@ export default function App() {
       {/* Header Banner */}
       <header className="hero-header">
         <div>
-          <h1 className="hero-title">🚗 Self-Driving Car Ethics AI Studio</h1>
+          <h1 className="hero-title">🚗 Ethical Decision Prediction for Self-Driving Cars</h1>
           <p className="hero-subtitle">High-Tech Cockpit & Real-Time AI Moral Dilemma Simulator</p>
         </div>
         <div className="status-badge">
