@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Car, Shield, Cpu, BarChart2, Upload, History, Info,
-  AlertTriangle, CheckCircle, Zap, Download, RefreshCw
+  AlertTriangle, CheckCircle, Zap, Download, RefreshCw, Sun, Moon,
+  CloudRain, CloudFog, Snowflake, AlertOctagon, UserCheck, ShieldAlert
 } from 'lucide-react';
 import './index.css';
 
@@ -10,7 +11,7 @@ const API_BASE = 'http://localhost:8000/api';
 export default function App() {
   const [activeTab, setActiveTab] = useState('studio');
 
-  // Interactive Scenario Parameters
+  // Interactive Telemetry Parameters
   const [params, setParams] = useState({
     speed_mph: 45,
     pedestrian_count: 3,
@@ -28,20 +29,18 @@ export default function App() {
   const [predictionData, setPredictionData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Other State
+  // History & Metrics State
   const [history, setHistory] = useState([]);
   const [metrics, setMetrics] = useState([]);
   const [report, setReport] = useState('');
   const [edaImages, setEdaImages] = useState([]);
   const [selectedEda, setSelectedEda] = useState('');
-  const [batchResults, setBatchResults] = useState([]);
 
-  // Fetch prediction on parameter change
+  // Auto-run inference whenever any parameter changes
   useEffect(() => {
     fetchPrediction();
   }, [params]);
 
-  // Fetch metrics & EDA list on mount
   useEffect(() => {
     fetchMetricsAndReport();
     fetchEdaImages();
@@ -134,6 +133,10 @@ export default function App() {
     }
   };
 
+  const updateParam = (key, value) => {
+    setParams(prev => ({ ...prev, [key]: value }));
+  };
+
   // Render Visual SVG Scenario Road Graphic
   const renderRoadSVG = () => {
     const decision = predictionData?.prediction || 'brake_hard';
@@ -159,9 +162,9 @@ export default function App() {
       params.obstacle_type === 'barricade' ? '🧱' : params.obstacle_type === 'animal' ? '🦌' : '🚘';
 
     return (
-      <svg viewBox="0 0 400 380" style={{ width: '100%', maxHeight: '310px', background: '#0f172a', borderRadius: '12px', border: '1px solid #1e293b' }}>
-        <rect x="60" y="0" width="280" height="380" fill="#1e293b" />
-        <line x1="200" y1="0" x2="200" y2="380" stroke="#475569" strokeWidth="4" strokeDasharray="15,15" />
+      <svg viewBox="0 0 400 380" style={{ width: '100%', maxHeight: '310px', background: '#090d16', borderRadius: '14px', border: '1px solid #1e293b' }}>
+        <rect x="60" y="0" width="280" height="380" fill="#111827" />
+        <line x1="200" y1="0" x2="200" y2="380" stroke="#334155" strokeWidth="4" strokeDasharray="15,15" />
         <line x1="60" y1="0" x2="60" y2="380" stroke="#f59e0b" strokeWidth="4" />
         <line x1="340" y1="0" x2="340" y2="380" stroke="#f59e0b" strokeWidth="4" />
 
@@ -190,7 +193,7 @@ export default function App() {
           <text x="35" y="70" fontSize="11" fill="white" fontWeight="bold" textAnchor="middle">{params.speed_mph} MPH</text>
         </g>
 
-        <rect x="20" y="20" width="160" height="35" rx="6" fill="rgba(15, 23, 42, 0.85)" stroke={color} strokeWidth="1.5" />
+        <rect x="20" y="20" width="160" height="35" rx="6" fill="rgba(15, 23, 42, 0.9)" stroke={color} strokeWidth="1.5" />
         <text x="100" y="42" fontSize="12" fill={color} fontWeight="bold" textAnchor="middle">{actionText}</text>
       </svg>
     );
@@ -198,42 +201,43 @@ export default function App() {
 
   return (
     <div className="container">
-      {/* Hero Header */}
+      {/* Header Banner */}
       <header className="hero-header">
         <div>
           <h1 className="hero-title">🚗 Self-Driving Car Ethics AI Studio</h1>
-          <p className="hero-subtitle">React.js + Python ML Autonomous Vehicle Moral Dilemma Simulator</p>
+          <p className="hero-subtitle">High-Tech Cockpit & Real-Time AI Moral Dilemma Simulator</p>
         </div>
         <div className="status-badge">
           <div className="status-dot"></div>
-          FastAPI & Scikit-Learn Active
+          Live Inference Engine Active
         </div>
       </header>
 
       {/* Navigation Tabs */}
       <nav className="tabs-nav">
         <button className={`tab-btn ${activeTab === 'studio' ? 'active' : ''}`} onClick={() => setActiveTab('studio')}>
-          <Zap size={18} /> 🕹️ Interactive Scenario Studio
+          <Zap size={18} /> 🕹️ Telemetry Cockpit
         </button>
         <button className={`tab-btn ${activeTab === 'batch' ? 'active' : ''}`} onClick={() => setActiveTab('batch')}>
-          <Upload size={18} /> 📁 Batch Scenario Upload
+          <Upload size={18} /> 📁 Batch Prediction
         </button>
         <button className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => setActiveTab('analytics')}>
           <BarChart2 size={18} /> 📊 Visual Analytics & Insights
         </button>
         <button className={`tab-btn ${activeTab === 'performance' ? 'active' : ''}`} onClick={() => setActiveTab('performance')}>
-          <Cpu size={18} /> ⚡ Model Benchmark & Intelligence
+          <Cpu size={18} /> ⚡ Model Benchmarks
         </button>
         <button className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`} onClick={() => setActiveTab('history')}>
-          <History size={18} /> 📜 Session History Log
+          <History size={18} /> 📜 Prediction History
         </button>
       </nav>
 
-      {/* TAB 1: INTERACTIVE SCENARIO STUDIO */}
+      {/* TAB 1: TELEMETRY COCKPIT */}
       {activeTab === 'studio' && (
         <div>
+          {/* Preset Buttons */}
           <div className="glass-card">
-            <h3>⚡ One-Click Scenario Archetype Presets</h3>
+            <h3>⚡ Quick Scenario Archetype Presets</h3>
             <div className="preset-grid">
               <div className="preset-card" onClick={() => applyPreset('school')}>
                 <h4>🚸 School Zone Dilemma</h4>
@@ -241,10 +245,10 @@ export default function App() {
               </div>
               <div className="preset-card" onClick={() => applyPreset('barricade')}>
                 <h4>🧱 High-Speed Barricade</h4>
-                <p>4 Pedestrians vs Occupants into Concrete Wall (60 MPH)</p>
+                <p>4 Pedestrians vs Occupants into Wall (60 MPH)</p>
               </div>
               <div className="preset-card" onClick={() => applyPreset('animal')}>
-                <h4>🦌 Animal Crossing</h4>
+                <h4>🦌 Animal Highway Crossing</h4>
                 <p>1 Deer vs Car Occupants | Brakes Functional (45 MPH)</p>
               </div>
               <div className="preset-card" onClick={() => applyPreset('jaywalker')}>
@@ -255,107 +259,150 @@ export default function App() {
           </div>
 
           <div className="studio-grid">
-            {/* Control Panel */}
+            {/* Interactive Control Panel */}
             <div className="glass-card">
-              <h3>⚙️ Live Scenario Control Panel</h3>
+              <h3>⚙️ Telemetry & Scenario Cockpit</h3>
+
+              {/* Vehicle Speed Slider */}
               <div className="form-group">
-                <label>Vehicle Speed: {params.speed_mph} MPH</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <label>Vehicle Speed</label>
+                  <strong style={{ color: 'var(--accent-cyan)' }}>{params.speed_mph} MPH</strong>
+                </div>
                 <input
                   type="range" min="10" max="90" step="5"
                   value={params.speed_mph}
-                  onChange={e => setParams({ ...params, speed_mph: parseInt(e.target.value) })}
+                  onChange={e => updateParam('speed_mph', parseInt(e.target.value))}
                 />
               </div>
 
-              <div className="flex-row">
-                <div className="form-group">
-                  <label>Brake System Status</label>
-                  <select
-                    className="form-control"
-                    value={params.brake_status}
-                    onChange={e => setParams({ ...params, brake_status: e.target.value })}
-                  >
-                    <option value="functional">Functional</option>
-                    <option value="failed">Failed</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Obstacle / Target Type</label>
-                  <select
-                    className="form-control"
-                    value={params.obstacle_type}
-                    onChange={e => setParams({ ...params, obstacle_type: e.target.value })}
-                  >
-                    <option value="pedestrian_group">Pedestrian Group</option>
-                    <option value="barricade">Barricade</option>
-                    <option value="animal">Animal</option>
-                    <option value="vehicle">Vehicle</option>
-                    <option value="jaywalker">Jaywalker</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex-row">
-                <div className="form-group">
-                  <label>Pedestrian Count: {params.pedestrian_count}</label>
-                  <input
-                    type="number" className="form-control" min="1" max="10"
-                    value={params.pedestrian_count}
-                    onChange={e => setParams({ ...params, pedestrian_count: parseInt(e.target.value) || 1 })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Car Occupants: {params.passenger_count}</label>
-                  <input
-                    type="number" className="form-control" min="1" max="6"
-                    value={params.passenger_count}
-                    onChange={e => setParams({ ...params, passenger_count: parseInt(e.target.value) || 1 })}
-                  />
-                </div>
-              </div>
-
-              <div className="flex-row">
-                <div className="form-group">
-                  <label>Road Setting</label>
-                  <select
-                    className="form-control"
-                    value={params.road_type}
-                    onChange={e => setParams({ ...params, road_type: e.target.value })}
-                  >
-                    <option value="city_street">City Street</option>
-                    <option value="highway">Highway</option>
-                    <option value="school_zone">School Zone</option>
-                    <option value="intersection">Intersection</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Weather Condition</label>
-                  <select
-                    className="form-control"
-                    value={params.weather_condition}
-                    onChange={e => setParams({ ...params, weather_condition: e.target.value })}
-                  >
-                    <option value="clear">Clear</option>
-                    <option value="rain">Rain</option>
-                    <option value="fog">Fog</option>
-                    <option value="snow">Snow</option>
-                  </select>
-                </div>
-              </div>
-
+              {/* Brake System Status Toggle */}
               <div className="form-group">
-                <label>Ethical Priority Score: {params.ethical_score}</label>
-                <input
-                  type="range" min="0.0" max="1.0" step="0.05"
-                  value={params.ethical_score}
-                  onChange={e => setParams({ ...params, ethical_score: parseFloat(e.target.value) })}
-                />
+                <label>Mechanical Brake Status</label>
+                <div className="toggle-switch-container">
+                  <div
+                    className={`toggle-switch-btn ${params.brake_status === 'functional' ? 'active-green' : ''}`}
+                    onClick={() => updateParam('brake_status', 'functional')}
+                  >
+                    🟢 Functional
+                  </div>
+                  <div
+                    className={`toggle-switch-btn ${params.brake_status === 'failed' ? 'active-red' : ''}`}
+                    onClick={() => updateParam('brake_status', 'failed')}
+                  >
+                    🔴 Brakes Failed
+                  </div>
+                </div>
+              </div>
+
+              {/* Obstacle Type Option Chips */}
+              <div className="form-group">
+                <label>Obstacle / Target Category</label>
+                <div className="chip-grid">
+                  {[
+                    { id: 'pedestrian_group', label: '🚸 Pedestrians' },
+                    { id: 'barricade', label: '🧱 Barricade' },
+                    { id: 'animal', label: '🦌 Animal' },
+                    { id: 'vehicle', label: '🚘 Vehicle' },
+                    { id: 'jaywalker', label: '🚶 Jaywalker' }
+                  ].map(item => (
+                    <div
+                      key={item.id}
+                      className={`option-chip ${params.obstacle_type === item.id ? 'active' : ''}`}
+                      onClick={() => updateParam('obstacle_type', item.id)}
+                    >
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Counts Steppers */}
+              <div className="flex-row" style={{ margin: '20px 0' }}>
+                <div className="form-group">
+                  <label>Pedestrian Count</label>
+                  <div className="counter-stepper">
+                    <button className="counter-btn" onClick={() => updateParam('pedestrian_count', Math.max(1, params.pedestrian_count - 1))}>-</button>
+                    <div className="counter-value">{params.pedestrian_count}</div>
+                    <button className="counter-btn" onClick={() => updateParam('pedestrian_count', Math.min(10, params.pedestrian_count + 1))}>+</button>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>Car Occupants</label>
+                  <div className="counter-stepper">
+                    <button className="counter-btn" onClick={() => updateParam('passenger_count', Math.max(1, params.passenger_count - 1))}>-</button>
+                    <div className="counter-value">{params.passenger_count}</div>
+                    <button className="counter-btn" onClick={() => updateParam('passenger_count', Math.min(6, params.passenger_count + 1))}>+</button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Road Setting Chips */}
+              <div className="form-group">
+                <label>Road Setting</label>
+                <div className="chip-grid">
+                  {[
+                    { id: 'city_street', label: '🏙️ City Street' },
+                    { id: 'highway', label: '🛣️ Highway' },
+                    { id: 'school_zone', label: '🏫 School Zone' },
+                    { id: 'intersection', label: '🚦 Intersection' }
+                  ].map(item => (
+                    <div
+                      key={item.id}
+                      className={`option-chip ${params.road_type === item.id ? 'active' : ''}`}
+                      onClick={() => updateParam('road_type', item.id)}
+                    >
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Weather Condition Chips */}
+              <div className="form-group">
+                <label>Weather Condition</label>
+                <div className="chip-grid">
+                  {[
+                    { id: 'clear', label: '☀️ Clear' },
+                    { id: 'rain', label: '🌧️ Rain' },
+                    { id: 'fog', label: '🌫️ Fog' },
+                    { id: 'snow', label: '❄️ Snow' }
+                  ].map(item => (
+                    <div
+                      key={item.id}
+                      className={`option-chip ${params.weather_condition === item.id ? 'active' : ''}`}
+                      onClick={() => updateParam('weather_condition', item.id)}
+                    >
+                      {item.label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Crossing Signal Toggle */}
+              <div className="form-group">
+                <label>Pedestrian Signal Status</label>
+                <div className="toggle-switch-container">
+                  <div
+                    className={`toggle-switch-btn ${params.pedestrian_jaywalking === 0 ? 'active-green' : ''}`}
+                    onClick={() => updateParam('pedestrian_jaywalking', 0)}
+                  >
+                    🟢 Legal Crossing (0)
+                  </div>
+                  <div
+                    className={`toggle-switch-btn ${params.pedestrian_jaywalking === 1 ? 'active-red' : ''}`}
+                    onClick={() => updateParam('pedestrian_jaywalking', 1)}
+                  >
+                    🔴 Jaywalking (1)
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Simulation Output */}
+            {/* Simulation Output Card */}
             <div className="glass-card">
-              <h3>🎯 Live Simulation & AI Decision</h3>
+              <h3>🎯 Live AI Prediction & Trajectory</h3>
+
               {predictionData ? (
                 <div>
                   <div style={{ textAlign: 'center' }}>
@@ -364,7 +411,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="proba-item" style={{ marginTop: '12px' }}>
+                  <div className="proba-item" style={{ marginTop: '10px' }}>
                     <div className="proba-label">
                       <span>Model Confidence</span>
                       <span>{predictionData.confidence}%</span>
@@ -378,7 +425,7 @@ export default function App() {
                     {renderRoadSVG()}
                   </div>
 
-                  <h4>Probability Distribution</h4>
+                  <h4>Class Probabilities Breakdown</h4>
                   {predictionData.probabilities.map((item, idx) => (
                     <div key={idx} className="proba-item">
                       <div className="proba-label">
@@ -392,15 +439,15 @@ export default function App() {
                   ))}
                 </div>
               ) : (
-                <p style={{ color: 'var(--text-muted)' }}>Calculating prediction...</p>
+                <p style={{ color: 'var(--text-muted)' }}>Calculating real-time inference...</p>
               )}
             </div>
           </div>
 
-          {/* Explainability Callout */}
+          {/* Decision Rationale */}
           {predictionData && (
             <div className="glass-card">
-              <h3>💡 AI Decision Rationale & Narrative</h3>
+              <h3>💡 AI Decision Rationale & Explanation</h3>
               <div className="explanation-box">
                 {predictionData.explanation}
               </div>
@@ -414,9 +461,9 @@ export default function App() {
         <div className="glass-card">
           <h3>📁 Batch Scenario Prediction</h3>
           <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-            Batch inference feature is available via REST API endpoint <code>POST /api/batch-predict</code>.
+            Batch inference feature is active via REST API endpoint <code>POST /api/batch-predict</code>.
           </p>
-          <button className="btn-primary" onClick={() => alert('Batch file processing API is active on server endpoint /api/batch-predict.')}>
+          <button className="btn-primary" onClick={() => alert('Batch file processing API is active on endpoint /api/batch-predict.')}>
             <Upload size={18} style={{ display: 'inline', marginRight: '8px' }} /> Upload CSV
           </button>
         </div>
