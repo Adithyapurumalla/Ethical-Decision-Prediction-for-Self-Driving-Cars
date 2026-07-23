@@ -216,7 +216,7 @@ export default function App() {
           <Zap size={18} /> 🕹️ Interactive Scenario Studio
         </button>
         <button className={`tab-btn ${activeTab === 'batch' ? 'active' : ''}`} onClick={() => setActiveTab('batch')}>
-          <FolderUpload size={18} /> 📁 Batch Scenario Upload
+          <Upload size={18} /> 📁 Batch Scenario Upload
         </button>
         <button className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => setActiveTab('analytics')}>
           <BarChart2 size={18} /> 📊 Visual Analytics & Insights
