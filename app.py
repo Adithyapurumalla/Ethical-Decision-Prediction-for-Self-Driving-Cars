@@ -213,13 +213,16 @@ def load_ml_pipeline() -> Tuple[Optional[Any], Optional[Any]]:
 
 @st.cache_data
 def load_datasets() -> Dict[str, pd.DataFrame]:
-    """Loads CSV datasets from data/."""
+    """Loads CSV datasets from data/ with memory optimization for cloud deployment."""
     data_dir = Path("data")
     datasets = {}
     if data_dir.exists():
         for csv_path in data_dir.glob("*.csv"):
             try:
-                datasets[csv_path.name] = pd.read_csv(csv_path)
+                if csv_path.name == "moral_machine_responses.csv":
+                    datasets[csv_path.name] = pd.read_csv(csv_path, nrows=10000)
+                else:
+                    datasets[csv_path.name] = pd.read_csv(csv_path)
             except Exception:
                 pass
     return datasets
